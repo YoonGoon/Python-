@@ -1,0 +1,62 @@
+#필요한 라이브러리 로드
+
+import pandas as pd
+from bs4 import BeautifulSoup
+import requests
+from urllib.request import urlopen
+from urllib.parse import urlencode,unquote, quote_plus
+import urllib
+import json
+from pprint import pprint
+import xml.etree.ElementTree as et
+import numpy as np
+
+
+#open api 요청하고자 하는 url 입력
+url = 'http://****'
+
+# 요청하고자 하는 url을 통하여 데이터 파싱 
+# rescode가 200이아닌 오류 발생시 해당 Error 코드 출력
+# 요청하는 OPEN API 서비스에 따라 JSON, XML등 다양한 형태로 파싱
+
+request = urllib.request.Request(url)
+response = urllib.request.urlopen(request)
+rescode = response.getcode()
+
+if(rescode==200):
+    response_body = response.read()
+    print(response_body.decode('utf-8'))
+else:
+    print("Error Code:" + rescode)
+    
+#XML, JSON 형식의 데이터에서 원하는 태그만 요청하기 ( getroot, findall 이용 )
+
+parseCon = []
+for i in range(0,조건 반복 횟수):
+    url1=quote(특정문자 or 숫자 조건)
+    result=url+url1
+    request = urllib.request.Request(result)
+    response = urllib.request.urlopen(request)
+    rescode = response.getcode()
+    response_body = response.read()
+    
+    tempsave=(response_body.decode('utf-8'))
+    f=open("C:\Windows\System32\KOPISPROJECT\tempsave.xml",'w', encoding='utf-8')
+    f.write(tempsave)
+    f.close()
+    
+    tempCon=et.parse("tempsave.xml")
+    temproot=tempCon.getroot()
+    for r in temproot.findall("./특정태그"):
+        parseCon.append(r.text)
+        
+    if(rescode==200):
+        print('ok')
+    else:
+        print("Error Code:" + rescode)    
+        
+#파싱한 데이터 저장
+parsedata=(response_body.decode('utf-8'))
+f=open("C:/Users/USER/parsedata.txt",'a', encoding='utf-8') #파일확장자와 인코딩은 임의로 저장
+f.write(parsedata)
+f.close()
